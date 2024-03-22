@@ -1,0 +1,28 @@
+<?php
+require 'environment.php';
+
+global $config;
+$config = array();
+if(ENVIRONMENT == 'development') {
+	define("BASE_URL", "http://localhost/");
+	$config['dbname'] = 'db_invoice_control';
+	$config['host'] = 'rds-mysql-10mintutorial.cee72otyzpve.sa-east-1.rds.amazonaws.com';
+	$config['dbuser'] = 'masterUsername';
+	$config['dbpass'] = 'FO\{]f{Z[(5+Gml9';
+	$config['jwt_secret_key'] = "abC123!";
+} else {
+	define("BASE_URL", "http://192.168.10.6/b7web-devstagram-master/");
+	$config['dbname'] = 'controle_financeiro_db';
+	$config['host'] = 'localhost';
+	$config['dbuser'] = 'root';
+	$config['dbpass'] = '';
+	$config['jwt_secret_key'] = "abC123!";
+}
+
+global $db;
+try {
+	$db = new PDO("mysql:dbname=".$config['dbname'].";host=".$config['host'], $config['dbuser'], $config['dbpass']);
+} catch(PDOException $e) {
+	echo "ERRO: ".$e->getMessage();
+	exit;
+}
